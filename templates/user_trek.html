@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Trek</title>
+</head>
+
+<body>
+    {% extends "base.html" %}
+    {% block content %}
+    <div class="mb-4">
+        <h2>Available Treks</h2>
+        <p class="text-muted">
+            Choose your next adventure.
+        </p>
+    </div>
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form method="GET" action="/user/trek">
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <input type="text" name="search" class="form-control" placeholder="🔍 Search Trek Name"
+                            value="{{ request.args.get('search', '') }}">
+                    </div>
+                    <div class="col-md-3">
+                        <select name="difficulty" class="form-select">
+                            <option value="">
+                                All Difficulty
+                            </option>
+                            <option value="Easy" {% if request.args.get('difficulty')=='Easy' %} selected {% endif %}>
+                                Easy
+                            </option>
+                            <option value="Moderate" {% if request.args.get('difficulty')=='Moderate' %} selected {%
+                                endif %}>
+                                Moderate
+                            </option>
+                            <option value="Hard" {% if request.args.get('difficulty')=='Hard' %} selected {% endif %}>
+                                Hard
+                            </option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" name="location" class="form-control" placeholder="📍 Location"
+                            value="{{ request.args.get('location', '') }}">
+                    </div>
+                    <div class="col-md-1">
+                        <button type="submit" class="btn btn-success w-100">
+                            Search
+                        </button>
+                    </div>
+                    <div class="col-md-1">
+                        <a href="/user/trek" class="btn btn-secondary w-100">
+                            Reset
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        {% for trek in treks %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <!-- Trek Name -->
+                    <h4>
+                        {{ trek[1] }}
+                    </h4>
+                    <!-- Location -->
+                    <p class="text-muted">
+                        📍 {{ trek[2] }}
+                    </p>
+                    <p>
+                        <strong>Difficulty:</strong>
+                        {% if trek[3] == "Easy" %}
+                        <span class="badge bg-success">
+                            Easy
+                        </span>
+                        {% elif trek[3] == "Moderate" %}
+                        <span class="badge bg-warning text-dark">
+                            Moderate
+                        </span>
+                        {% elif trek[3] == "Hard" %}
+                        <span class="badge bg-danger">
+                            Hard
+                        </span>
+                        {% else %}
+                        <span class="badge bg-secondary">
+                            {{ trek[3] }}
+                        </span>
+                        {% endif %}
+                    </p>
+                    <p>
+                        <strong>Duration:</strong>
+                        {{ trek[4] }} Days
+                    </p>
+                    <p>
+                        <strong>Available Slots:</strong>
+                        {{ trek[5] }}
+                    </p>
+                    <p>
+                        <strong>Start:</strong>
+                        {{ trek[6] }}
+                    </p>
+                    <p>
+                        <strong>End:</strong>
+                        {{ trek[7] }}
+                    </p>
+                    <p>
+                        <strong>Status:</strong>
+                        {% if trek[8] == "Open" %}
+                        <span class="badge bg-success">
+                            Open
+                        </span>
+                        {% elif trek[8] == "Closed" %}
+                        <span class="badge bg-danger">
+                            Closed
+                        </span>
+                        {% else %}
+                        <span class="badge bg-warning text-dark">
+                            {{ trek[8] }}
+                        </span>
+                        {% endif %}
+                    </p>
+                </div>
+                <div class="card-footer bg-white border-0">
+                    <a href="/user/trek/{{ trek[0] }}" class="btn btn-primary w-100">
+                        View Details
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endblock %}
+</body>
+
+</html>

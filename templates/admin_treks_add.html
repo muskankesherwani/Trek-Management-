@@ -1,0 +1,215 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-5 mb-5">
+
+    <!-- Page Heading -->
+
+    <div class="mb-4">
+        <h2>Add New Trek</h2>
+
+        <p class="text-muted">
+            Enter the details of the new trekking route.
+        </p>
+    </div>
+
+
+    <!-- Trek Form -->
+
+    <div class="card shadow-sm">
+
+        <div class="card-body p-4">
+
+            <form method="POST" action="/admin/treks/add">
+
+                <!-- Trek Name -->
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Trek Name
+                    </label>
+
+                    <input type="text" name="name" class="form-control" placeholder="Enter trek name" required>
+
+                </div>
+
+
+                <!-- Location -->
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Location
+                    </label>
+
+                    <input type="text" name="location" class="form-control" placeholder="Enter trek location" required>
+
+                </div>
+
+
+                <!-- Difficulty -->
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Difficulty
+                    </label>
+
+                    <select name="difficulty" class="form-select" required>
+
+                        <option value="" selected disabled>
+                            Select Difficulty
+                        </option>
+
+                        <option value="Easy">
+                            Easy
+                        </option>
+
+                        <option value="Moderate">
+                            Moderate
+                        </option>
+
+                        <option value="Hard">
+                            Hard
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Duration and Slots -->
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Duration (in days)
+                        </label>
+
+                        <input type="number" name="duration" class="form-control" placeholder="Enter duration" required>
+
+                    </div>
+
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Available Slots
+                        </label>
+
+                        <input type="number" name="available_slots" class="form-control"
+                            placeholder="Enter available slots" required>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Start Date and End Date -->
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            Start Date
+                        </label>
+
+                        <input type="date" name="start_date" class="form-control" required>
+
+                    </div>
+
+
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label">
+                            End Date
+                        </label>
+
+                        <input type="date" name="end_date" class="form-control" required>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Status -->
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Status
+                    </label>
+
+                    <select name="status" class="form-select" required>
+
+                        <option value="Pending">
+                            Pending
+                        </option>
+
+                        <option value="Approved">
+                            Approved
+                        </option>
+
+                        <option value="Open">
+                            Open
+                        </option>
+
+                        <option value="Closed">
+                            Closed
+                        </option>
+
+                        <option value="Completed">
+                            Completed
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- Description -->
+
+                <div class="mb-4">
+
+                    <label class="form-label">
+                        Description
+                    </label>
+
+                    <textarea name="description" class="form-control" rows="5"
+                        placeholder="Enter trek description"></textarea>
+
+                </div>
+
+
+                <!-- Buttons -->
+
+                <div class="d-flex gap-2">
+
+                    <a href="/admin/treks" class="btn btn-secondary">
+
+                        Cancel
+
+                    </a>
+
+                    <button type="submit" class="btn btn-success">
+
+                        Add Trek
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

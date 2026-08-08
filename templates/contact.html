@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Page</title>
+</head>
+
+<body>
+    {% extends "base.html" %}
+    {% block content %}
+    <div class="text-center mb-5">
+        <h1 class="display-4">
+            📞 Contact Us
+        </h1>
+        <p class="lead text-muted">
+            We'd Love to Hear from You. Reach out to US Anytime!
+        </p>
+    </div>
+    <div class="row mb-5">
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body text-center">
+                    <h1>📍</h1>
+                    <h5>Address</h5>
+                    <p class="text-muted">
+                        Trekking Management Office<br>
+                        Bengaluru, Karnataka<br>
+                        India
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body text-center">
+                    <h1>📧</h1>
+                    <h5>Email</h5>
+                    <p class="text-muted">
+                        support@trekmanagement.com
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body text-center">
+                    <h1>📞</h1>
+                    <h5>Phone</h5>
+                    <p class="text-muted">
+                        +91 98765 43210
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card shadow-sm mb-5">
+        <div class="card-body">
+            <h3 class="mb-3">
+                🕒 Office Hours
+            </h3>
+            <table class="table">
+                <tr>
+                    <th>Monday - Friday</th>
+                    <td>9:00 AM - 6:00 PM</td>
+                </tr>
+                <tr>
+                    <th>Saturday</th>
+                    <td>10:00 AM - 4:00 PM</td>
+                </tr>
+                <tr>
+                    <th>Sunday</th>
+                    <td>Closed</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <!-- Contact Form -->
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h3 class="mb-4">
+                ✉ Send Us a Message
+            </h3>
+            <form method="POST" action="/contact">
+
+                <div class="mb-3">
+                    <label class="form-label">
+                        Name
+                    </label>
+                    <input type="text" name="name" class="form-control" placeholder="Enter your name" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">
+                        Email
+                    </label>
+                    <input type="email" name="email" class="form-control" placeholder="Enter your email" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">
+                        Subject
+                    </label>
+                    <input type="text" name="subject" class="form-control" placeholder="Subject" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">
+                        Message
+                    </label>
+                    <textarea name="message" class="form-control" rows="5" placeholder="Write your message"
+                        required></textarea>
+                </div>
+                <button type="submit" class="btn btn-success">
+                    Send Message
+                </button>
+            </form>
+        </div>
+    </div>
+    <div class="mt-4 text-end">
+        <a href="/" class="btn btn-secondary" style="text-align: right;">
+            ← Back to Home
+        </a>
+    </div>
+    {% endblock %}
+</body>
+
+</html>

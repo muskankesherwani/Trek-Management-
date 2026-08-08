@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    {% extends "base.html" %}
+    {% block content %}
+    <div class="mb-4">
+        <h2>Staff Dashboard</h2>
+        <p class="text-muted">
+            Welcome to the Trek Staff Portal!!
+        </p>
+    </div>
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body text-center">
+                    <h1>📋</h1>
+                    <h4>Bookings</h4>
+                    <p class="text-muted">
+                        View all trek bookings.
+                    </p>
+                    <a href="/staff/bookings" class="btn btn-primary">
+                        View Bookings
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body text-center">
+                    <h1>🏕️</h1>
+                    <h4>Treks</h4>
+                    <p class="text-muted">
+                        View assigned treks.
+                    </p>
+                    <a href="/staff/trek" class="btn btn-success">
+                        View Treks
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body text-center">
+                    <h1>👤</h1>
+                    <h4>Profile</h4>
+                    <p class="text-muted">
+                        Manage your profile.
+                    </p>
+                    <a href="/staff/profile" class="btn btn-dark">
+                        My Profile
+                    </a>
+                    <a href="/logout" class="btn btn-danger">
+                        Logout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+</body>
+
+</html>

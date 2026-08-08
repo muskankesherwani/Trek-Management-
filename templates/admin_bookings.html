@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Bookings</title>
+</head>
+
+<body>
+    {% extends "base.html" %}
+
+    {% block content %}
+
+    <div class="mb-4">
+        <h2>Manage Bookings</h2>
+        <p class="text-muted">
+            View and manage all trek bookings.
+        </p>
+    </div>
+
+    <!-- Booking Filters -->
+    <div class="mb-4">
+
+        <a href="/admin/bookings" class="btn btn-dark me-2">
+            All
+        </a>
+
+        <a href="/admin/bookings?status=Pending" class="btn btn-warning text-dark me-2">
+            Pending
+        </a>
+
+        <a href="/admin/bookings?status=Approved" class="btn btn-success me-2">
+            Approved
+        </a>
+
+        <a href="/admin/bookings?status=Rejected" class="btn btn-danger me-2">
+            Rejected
+        </a>
+
+        <a href="/admin/bookings?status=Completed" class="btn btn-primary">
+            Completed
+        </a>
+
+    </div>
+
+
+    <!-- Bookings Table -->
+    <div class="card shadow-sm">
+
+        <div class="card-body">
+
+            <h4 class="mb-4">
+                Trek Bookings
+            </h4>
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle">
+
+                    <thead class="table-dark">
+
+                        <tr>
+                            <th>Booking ID</th>
+                            <th>User</th>
+                            <th>Trek</th>
+                            <th>Location</th>
+                            <th>Booking Date</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for b in bookings %}
+
+                        <tr>
+
+                            <!-- Booking ID -->
+                            <td>
+                                BK{{ "%03d"|format(b[0]) }}
+                            </td>
+
+                            <!-- User -->
+                            <td>
+                                {{ b[1] }}
+                            </td>
+
+                            <!-- Trek -->
+                            <td>
+                                {{ b[2] }}
+                            </td>
+
+                            <!-- Location -->
+                            <td>
+                                {{ b[3] }}
+                            </td>
+
+                            <!-- Booking Date -->
+                            <td>
+                                {{ b[4] }}
+                            </td>
+
+                            <!-- Status -->
+                            <td>
+
+                                {% if b[5] == "Pending" %}
+
+                                <span class="badge bg-warning text-dark">
+                                    Pending
+                                </span>
+
+                                {% elif b[5] == "Approved" %}
+
+                                <span class="badge bg-success">
+                                    Approved
+                                </span>
+
+                                {% elif b[5] == "Completed" %}
+
+                                <span class="badge bg-primary">
+                                    Completed
+                                </span>
+
+                                {% elif b[5] == "Rejected" %}
+
+                                <span class="badge bg-danger">
+                                    Rejected
+                                </span>
+
+                                {% elif b[5] == "Cancelled" %}
+
+                                <span class="badge bg-secondary">
+                                    Cancelled
+                                </span>
+
+                                {% else %}
+
+                                <span class="badge bg-secondary">
+                                    {{ b[5] }}
+                                </span>
+
+                                {% endif %}
+
+                            </td>
+                            <td>
+                                {% if b[5] == "Pending" %}
+                                <a href="/admin/approve/{{ b[0] }}" class="btn btn-success btn-sm">
+                                    Approve
+                                </a>
+                                <a href="/admin/reject/{{ b[0] }}" class="btn btn-danger btn-sm">
+                                    Reject
+                                </a>
+                                {% elif b[5] == "Approved" %}
+                                <a href="/admin/complete/{{ b[0] }}" class="btn btn-primary btn-sm">
+                                    Complete
+                                </a>
+                                {% elif b[5] == "Completed" %}
+                                <span class="text-muted">
+                                    No Action
+                                </span>
+                                {% elif b[5] == "Rejected" %}
+                                <span class="text-muted">
+                                    No Action
+                                </span>
+                                {% elif b[5] == "Cancelled" %}
+                                <span class="text-muted">
+                                    No Action
+                                </span>
+                                {% else %}
+                                <span class="text-muted">
+                                    No Action
+                                </span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+</body>
+
+</html>

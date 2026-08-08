@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+</head>
+
+<body>
+    {% extends "base.html" %}
+    {% block hero %}
+    <div class="container-fluid py-5 hero-section">
+        <div class="row align-items-center">
+            <!-- Left Images -->
+            <div class="col-md-3">
+                <div class="hero-left">
+                    <img src="{{ url_for('static', filename='images/trek1.jpg') }}" class="hero-img img1">
+                <!-- <img src="{{ url_for('static', filename='images/trek2.jpg') }}" class="hero-img img2"> -->
+                    <img src="{{ url_for('static', filename='images/trek3.jpg') }}" class="hero-img img3">
+                    <img src="{{ url_for('static', filename='images/trek4.jpg') }}" class="hero-img img4"> 
+                </div>
+            </div>
+            <!-- Center -->
+            <div class="col-md-6 text-center">
+                <h1 class="display-4 fw-bold">
+                    Trekking Management Application
+                </h1>
+                <p class="lead text-muted">
+                   <!-- Discover breathtaking adventures and explore nature. -->
+                    Trekking is a Journey of Adventure, 
+                    Self-Discovery, and Unforgettable Experience.
+                </p>
+                <div class="mt-4">
+                    <a href="/login" class="btn btn-success btn-lg me-2">
+                        Login
+                    </a>
+                    <a href="/about" class="btn btn-outline-secondary btn-lg">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+            <!-- Right Images -->
+            <div class="col-md-3">
+                <div class="hero-right">
+                    <img src="{{ url_for('static', filename='images/trek5.jpg') }}" class="hero-img img5">
+                    <img src="{{ url_for('static', filename='images/trek6.jpg') }}" class="hero-img img6">
+                    <img src="{{ url_for('static', filename='images/trek7.jpg') }}" class="hero-img img7">
+                 <!---  <img src="{{ url_for('static', filename='images/trek8.jpg') }}" class="hero-img img8"> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+    {% block content %}
+    <!-- Hero Banner -->
+    <div class="mt-5">
+        <h2 class="text-center mb-4">
+            🌿 Why Choose Us?
+        </h2>
+        <div class="row">
+            <div class="col-md-3 mb-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body text-center">
+                        <h1>🥾</h1>
+                        <h5>Expert Guides</h5>
+                        <p class="text-muted">
+                            Certified and experienced trekking guides.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body text-center">
+                        <h1>🛡️</h1>
+                        <h5>Safe Adventures</h5>
+                        <p class="text-muted">
+                            Safety is our highest priority.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body text-center">
+                        <h1>🏕️</h1>
+                        <h5>Beautiful Treks</h5>
+                        <p class="text-muted">
+                            Explore India's most scenic trekking routes.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body text-center">
+                        <h1>⭐</h1>
+                        <h5>Best Experience</h5>
+                        <p class="text-muted">
+                            Thousands of happy trekkers every year.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mt-5">
+        <h2 class="text-center mb-4">
+            🏕️ Featured Treks
+        </h2>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card shadow">
+                    <div class="card-body text-center">
+                        <h4>Kedarkantha Trek</h4>
+                        <p class="text-muted">
+                            Uttarakhand
+                        </p>
+                        <p>
+                            Snow-covered peaks with breathtaking sunrise views.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow">
+                    <div class="card-body text-center">
+                        <h4>Valley of Flowers</h4>
+                        <p class="text-muted">
+                            Uttarakhand
+                        </p>
+                        <p>
+                            A UNESCO World Heritage Site full of colorful flowers.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow">
+                    <div class="card-body text-center">
+                        <h4>Hampta Pass</h4>
+                        <p class="text-muted">
+                            Himachal Pradesh
+                        </p>
+                        <p>
+                            One of the most scenic crossover treks in India.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mt-5">
+        <div class="row text-center">
+            <div class="col-md-3">
+                <h1 class="text-success">50+</h1>
+                <h5>Treks</h5>
+            </div>
+            <div class="col-md-3">
+                <h1 class="text-primary">500+</h1>
+                <h5>Happy Trekkers</h5>
+            </div>
+            <div class="col-md-3">
+                <h1 class="text-warning">20+</h1>
+                <h5>Expert Guides</h5>
+            </div>
+            <div class="col-md-3">
+                <h1 class="text-danger">15+</h1>
+                <h5>Locations</h5>
+            </div>
+        </div>
+    </div>
+    <div class="card shadow mt-5">
+        <div class="card-body text-center">
+            <h2>
+                💬 What Our Trekkers Say
+            </h2>
+            <br>
+            <blockquote class="blockquote">
+                "One of the best trekking experiences I've ever had.
+                Everything was perfectly organized."
+            </blockquote>
+            <footer class="blockquote-footer">
+                Happy Trekker
+            </footer>
+        </div>
+    </div>
+    <div class="text-center mt-5 mb-5" style="text-align: center;">
+        <h2>
+            Ready For Your Next Adventure?
+        </h2>
+        <br>
+        <a href="/login" class="btn btn-success btn-lg">
+            Start Your Journey
+        </a>
+    </div>
+    {% endblock %}
+</body>
+
+</html>

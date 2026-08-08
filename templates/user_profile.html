@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+</head>
+
+<body>
+    {% extends "base.html" %}
+
+    {% block content %}
+    <div class="container mt-4">
+        <div class="card shadow">
+            <div class="card-header bg-success text-white">
+                <h3>👤 My Profile</h3>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <tr>
+                        <th>Name</th>
+                        <td>{{ user[1] }}</td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td>{{ user[2] }}</td>
+                    </tr>
+                    <tr>
+                        <th>Phone</th>
+                        <td>{{ user[4] }}</td>
+                    </tr>
+                    <tr>
+                        <th>Address</th>
+                        <td>{{ user[5] }}</td>
+                    </tr>
+                    <tr>
+                        <th>Status</th>
+                        <td>{{ user[6] }}</td>
+                    </tr>
+                </table>
+                <a href="/user/profile/edit" class="btn btn-primary">
+                    Edit Profile
+                </a>
+                <a href="/user/password-change" class="btn btn-warning">
+                    Change Password
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+</body>
+
+</html>

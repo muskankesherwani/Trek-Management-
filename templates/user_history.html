@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User History</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- this link is for Bootstrap -->
+</head>
+
+<body>
+    {% extends "base.html" %}
+    {% block content %}
+    <!-- Page Heading -->
+    <div class="mb-4">
+        <h2>Trekking History</h2>
+        <p class="text-muted">
+            View your previous trekking activities and booking history.
+        </p>
+    </div>
+    <div class="row g-3 mb-5">
+
+        <!-- Completed Treks -->
+
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h6 class="text-muted">
+                        Completed Treks
+                    </h6>
+                    <h2> {{ completed }}</h2>
+                    <p class="mb-0">
+                        Treks successfully completed
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cancelled Bookings -->
+
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h6 class="text-muted">
+                        Cancelled Bookings
+                    </h6>
+                    <h2> {{ cancelled }}</h2>
+                    <p class="mb-0">
+                        Cancelled Trekking Bookings
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Treks -->
+
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h6 class="text-muted">
+                        Total Bookings
+                    </h6>
+                    <h2>{{ total_bookings }}</h2>
+                    <p class="mb-0">
+                        Total trekking bookings made
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Trekking History Table -->
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h4 class="mb-4">
+                Previous Treks
+            </h4>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Booking ID</th>
+                            <th>Trek Name</th>
+                            <th>Location</th>
+                            <th>Booking Date</th>
+                            <th>Trek Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <tbody>
+                    <tbody>
+                        {% if history %}
+                        {% for row in history %}
+                        <tr>
+                            <td>{{ row[0] }}</td>
+                            <td>{{ row[1] }}</td>
+                            <td>{{ row[2] }}</td>
+                            <td>{{ row[3] }}</td>
+                            <td>{{ row[4] }}</td>
+                            <td>
+                                {% if row[5] == "Completed" %}
+                                <span class="badge bg-success">
+                                    Completed
+                                </span>
+                                {% else %}
+                                <span class="badge bg-danger">
+                                    Cancelled
+                                </span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        {% else %}
+                        <tr>
+                            <td colspan="6" class="text-center text-muted">
+                                No trekking history available.
+                            </td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+
+                    </tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back Button -->
+    <div class="mt-4">
+        <a href="{{ url_for('user_dashboard') }}" class="btn btn-secondary" style="float: right;">
+            ← Back to Dashboard
+        </a>
+    </div>
+    {% endblock %}
+</body>
+
+</html>
