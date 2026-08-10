@@ -10,54 +10,57 @@
 
 <body>
     {% extends "base.html" %}
+
     {% block content %}
-    <!-- Page Heading -->
+
     <div class="mb-4">
         <h2>Edit Trek</h2>
+            <a href="/admin/edit/trek/{{ trek[0] }}"
+                class="btn btn-primary btn-sm">
+              Edit
+            </a>
         <p class="text-muted">
-            Update the details of the trekking route.
+            Update the Details of the Trekking Route.
         </p>
     </div>
-    <!-- Edit Trek Card -->
+
     <div class="card shadow-sm">
         <div class="card-body p-4">
+
             <form method="POST">
+
                 <!-- Trek ID -->
                 <div class="mb-3">
                     <label class="form-label">
                         Trek ID
                     </label>
+
                     <input type="text" class="form-control" value="T{{ '%03d' | format(trek[0]) }}" readonly>
                 </div>
 
 
                 <!-- Trek Name -->
                 <div class="mb-3">
-
                     <label class="form-label">
                         Trek Name
                     </label>
 
                     <input type="text" name="name" class="form-control" value="{{ trek[1] }}" required>
-
                 </div>
 
 
                 <!-- Location -->
                 <div class="mb-3">
-
                     <label class="form-label">
                         Location
                     </label>
 
                     <input type="text" name="location" class="form-control" value="{{ trek[2] }}" required>
-
                 </div>
 
 
                 <!-- Difficulty -->
                 <div class="mb-3">
-
                     <label class="form-label">
                         Difficulty
                     </label>
@@ -77,11 +80,10 @@
                         </option>
 
                     </select>
-
                 </div>
 
 
-                <!-- Duration + Slots -->
+                <!-- Duration and Available Slots -->
                 <div class="row">
 
                     <div class="col-md-6 mb-3">
@@ -135,9 +137,9 @@
 
                     </select>
 
-                    <small class="text-muted">
-                        Only approved staff members are shown.
-                    </small>
+                    <div class="form-text">
+                        Only approved staff members are available for assignment.
+                    </div>
 
                 </div>
 
@@ -176,7 +178,7 @@
                 </div>
 
 
-                <!-- Start Date + End Date -->
+                <!-- Start Date and End Date -->
                 <div class="row">
 
                     <div class="col-md-6 mb-3">
@@ -232,7 +234,6 @@
             </form>
 
         </div>
-
     </div>
 
     {% endblock %}

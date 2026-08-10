@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assigned Staff</title>
+</head>
+
+<body>
+    {% extends "base.html" %}
+
+    {% block content %}
+
+    <div class="mb-4">
+        <h2>Assign Staff</h2>
+
+        <p class="text-muted">
+            Assign a staff member to this trekking route.
+        </p>
+    </div>
+
+
+    <div class="card shadow-sm">
+
+        <div class="card-body p-4">
+
+            <h4 class="mb-4">
+                Trek Details
+            </h4>
+
+            <div class="mb-3">
+
+                <strong>Trek ID:</strong>
+
+                T{{ "%03d"|format(trek[0]) }}
+
+            </div>
+
+
+            <div class="mb-3">
+
+                <strong>Trek Name:</strong>
+
+                {{ trek[1] }}
+
+            </div>
+
+
+            <div class="mb-3">
+
+                <strong>Location:</strong>
+
+                {{ trek[2] }}
+
+            </div>
+
+
+            <hr>
+
+
+            <form method="POST">
+
+                <div class="mb-4">
+
+                    <label class="form-label">
+                        Select Staff
+                    </label>
+
+                    <label class="form-label">
+                        <strong>Select Staff</strong>
+                    </label>
+
+                    <select name="staff_id" class="form-select" required>
+
+                        <option value="">
+                            -- Select Staff --
+                        </option>
+
+                        {% for s in staff %}
+
+                        <option value="{{ s[0] }}">
+                            {{ s[1] }} - {{ s[2] }} ({{ s[3] }})
+                        </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+
+                <div class="d-flex gap-2">
+
+                    <a href="/admin/treks" class="btn btn-secondary">
+                        Cancel
+                    </a>
+
+
+                    <button type="submit" class="btn btn-primary">
+                        Assign Staff
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+    {% endblock %}
+</body>
+
+</html>

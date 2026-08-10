@@ -305,6 +305,58 @@ def delete_message(message_id):
     return redirect("/admin/contact-messages")
 
 
+
+# ADMIN ASSIGN STAFF TO TREK
+@app.route("/admin/assign-staff/<int:trek_id>", methods=["GET", "POST"])
+@admin_required
+def assign_staff(trek_id):
+    connection = sqlite3.connect("trekking.db")
+    cursor = connection.cursor()
+    cursor.execute("""
+        SELECT *
+        FROM trek
+        WHERE id = ?
+    """, (trek_id,))
+    trek = cursor.fetchone()
+    if trek is None:
+        connection.close()
+        flash("Trek not found.", "danger")
+        return redirect("/admin/treks")
+    cursor.execute("""
+        SELECT id, name, email, status
+        FROM staff
+        ORDER BY id
+    """)
+    staff = cursor.fetchall()
+    print("STAFF FROM DATABASE:", staff)
+    if request.method == "POST":
+        staff_id = request.form.get("staff_id")
+        print("SELECTED STAFF:", staff_id)
+        if not staff_id:
+            connection.close()
+            flash("Please select a staff member.", "warning")
+            return redirect(
+                "/admin/assign-staff/" + str(trek_id)
+            )
+        cursor.execute("""
+            UPDATE trek
+            SET assigned_staff_id = ?
+            WHERE id = ?
+        """, (staff_id, trek_id))
+        connection.commit()
+        connection.close()
+        flash("Staff assigned successfully!", "success")
+        return redirect("/admin/treks")
+    connection.close()
+    return render_template(
+        "admin_assign_staff.html",
+        trek=trek,
+        staff=staff
+    )
+
+
+
+
 #admin treks
 @app.route("/admin/treks")
 @admin_required
@@ -442,9 +494,9 @@ def edit_trek(id):
                 duration = ?,
                 available_slots = ?,
                 assigned_staff_id = ?,
+                status = ?,
                 start_date = ?,
                 end_date = ?,
-                status = ?,
                 description = ?
             WHERE id = ?
         """, (
@@ -454,9 +506,9 @@ def edit_trek(id):
             duration,
             available_slots,
             assigned_staff_id,
+            status,
             start_date,
             end_date,
-            status,
             description,
             id
         ))
@@ -474,15 +526,20 @@ def edit_trek(id):
         SELECT id, name
         FROM staff
         WHERE status = 'Approved'
+        ORDER BY id
     """)
     staff = cursor.fetchall()
     connection.close()
+    if trek is None:
+        flash("Trek not found.", "danger")
+        return redirect("/admin/treks")
     return render_template(
         "admin_edit_trek.html",
         trek=trek,
         staff=staff
     )
-
+    
+   
 
 
 
@@ -589,7 +646,6 @@ def admin_complete_booking(booking_id):
 
 
 
-
 #approve staff
 @app.route("/admin/staff/approve/<int:id>")
 @admin_required
@@ -674,6 +730,28 @@ def admin_staff():
     return render_template(
         "admin_staff.html",
         staff=staff
+    )
+
+
+# STAFF VIEW ASSIGNED TREKS
+
+@app.route("/staff/trek")
+@staff_required
+def staff_trek():
+    connection = sqlite3.connect("trekking.db")
+    cursor = connection.cursor()
+    staff_id = session.get("staff_id")
+    cursor.execute("""
+        SELECT *
+        FROM trek
+        WHERE assigned_staff_id = ?
+        ORDER BY id DESC
+    """, (staff_id,))
+    treks = cursor.fetchall()
+    connection.close()
+    return render_template(
+        "staff_trek.html",
+        treks=treks
     )
 
 
@@ -766,11 +844,10 @@ def admin_required(f):
             return redirect("/login")
         return f(*args, **kwargs)
     return decorated_function
-
+#bookings 
 @app.route("/admin/bookings")
-@admin_required
 def admin_bookings():
-    status = request.args.get("status", "")
+    status = request.args.get("status")
     connection = sqlite3.connect("trekking.db")
     cursor = connection.cursor()
     if status:
@@ -842,22 +919,96 @@ def staff_dashboard():
     )
 
 
-#staff trek
-@app.route("/staff/trek")
+
+
+
+
+
+# STAFF ASSIGNED TREK    update
+@app.route("/staff/trek/update/<int:trek_id>", methods=["POST"])
 @staff_required
-def staff_trek():
+def staff_update_trek(trek_id):
     connection = sqlite3.connect("trekking.db")
     cursor = connection.cursor()
+    staff_id = session.get("staff_id")
     cursor.execute("""
-        SELECT *
+        SELECT id
         FROM trek
-        ORDER BY start_date
-    """)
-    treks = cursor.fetchall()
+        WHERE id = ?
+        AND assigned_staff_id = ?
+    """, (trek_id, staff_id))
+    trek = cursor.fetchone()
+    if not trek:
+        connection.close()
+        flash(
+            "You are not assigned to this trek.",
+            "danger"
+        )
+        return redirect("/staff/dashboard")
+    available_slots = request.form["available_slots"]
+    status = request.form["status"]
+    cursor.execute("""
+        UPDATE trek
+        SET available_slots = ?,
+            status = ?
+        WHERE id = ?
+        AND assigned_staff_id = ?
+    """, (
+        available_slots,
+        status,
+        trek_id,
+        staff_id
+    ))
+    connection.commit()
     connection.close()
-    return render_template(
-        "staff_trek.html",
-        treks=treks
+    flash(
+        "Trek updated successfully!",
+        "success"
+    )
+    return redirect(
+        "/staff/trek/" + str(trek_id)
+    )
+
+
+
+
+
+
+# STAFF COMPLETE TREK
+@app.route("/staff/complete-trek/<int:trek_id>")
+@staff_required
+def complete_trek(trek_id):
+    connection = sqlite3.connect("trekking.db")
+    cursor = connection.cursor()
+    staff_id = session.get("staff_id")
+    cursor.execute("""
+        SELECT id
+        FROM trek
+        WHERE id = ?
+        AND assigned_staff_id = ?
+    """, (trek_id, staff_id))
+    trek = cursor.fetchone()
+    if not trek:
+        connection.close()
+        flash(
+            "You are not assigned to this trek.",
+            "danger"
+        )
+        return redirect("/staff/dashboard")
+    cursor.execute("""
+        UPDATE trek
+        SET status = 'Completed'
+        WHERE id = ?
+        AND assigned_staff_id = ?
+    """, (trek_id, staff_id))
+    connection.commit()
+    connection.close()
+    flash(
+        "Trek marked as completed!",
+        "success"
+    )
+    return redirect(
+        "/staff/trek/" + str(trek_id)
     )
 
 
@@ -968,28 +1119,45 @@ def complete_booking(booking_id):
     connection.close()
     return redirect("/staff/bookings")
 
-# STAFF CHANGE PASSWORD
+
+
+#staff password change
 @app.route("/staff/password-change", methods=["GET", "POST"])
 @staff_required
 def staff_password_change():
+
     staff_id = session.get("staff_id")
+
     if not staff_id:
         return redirect("/login")
+
     connection = sqlite3.connect("trekking.db")
     cursor = connection.cursor()
+
     if request.method == "POST":
+
         current_password = request.form["current_password"]
         new_password = request.form["new_password"]
         confirm_password = request.form["confirm_password"]
+
         cursor.execute("""
             SELECT password
             FROM staff
             WHERE id = ?
         """, (staff_id,))
-        db_password = cursor.fetchone()[0]
+
+        result = cursor.fetchone()
+
+        if not result:
+            connection.close()
+            return "Staff account not found."
+
+        db_password = result[0]
+
         if current_password != db_password:
             connection.close()
             return "Current password is incorrect."
+
         if new_password != confirm_password:
             connection.close()
             return "New Password and Confirm Password do not match."
@@ -997,15 +1165,16 @@ def staff_password_change():
             UPDATE staff
             SET password = ?
             WHERE id = ?
-        """, (
-            new_password,
-            staff_id
-        ))
+        """, (new_password, staff_id))
         connection.commit()
         connection.close()
         return redirect("/staff/profile")
     connection.close()
-    return render_template("staff_change_password.html")
+    return render_template("staff_password_change.html")
+
+  
+
+
 
 
 
@@ -1046,7 +1215,7 @@ def edit_staff_profile():
     staff = cursor.fetchone()
     connection.close()
     return render_template(
-        "staff_edit_profile.html",
+        "staff_profile_edit.html",
         staff=staff
     )
 
